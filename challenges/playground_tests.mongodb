@@ -1,7 +1,19 @@
 use("commerce");
 db.produtos.updateMany(
   {},
-  { $set: { valorUnitario: NumberDecimal("0.00") } },
+  { $set: { avaliacao: NumberInt(0) } },
 );
 
-db.produtos.find({}, { _id: 0, valorUnitario: 1, nome: 1 });
+use("commerce");
+db.produtos.updateMany(
+  { tags: { $in: ["bovino"] } },
+  { $inc: { avaliacao: 5 } },
+);
+
+db.produtos.updateMany(
+  { tags: { $in: ["ave"] } },
+  { $inc: { avaliacao: 3 } },
+);
+
+use("commerce");
+db.produtos.find({}, { _id: 0, avaliacao: 1, nome: 1 });
